@@ -5,8 +5,10 @@ export default function App() {
     <main>
       <CourseGoal
         title='Learn React + TS'
-        description='Learn it from the ground up'
-      />
+        // description='Learn it from the ground up'
+      >
+        <p>Learn it from the ground up</p>
+      </CourseGoal>
     </main>
   )
 }
