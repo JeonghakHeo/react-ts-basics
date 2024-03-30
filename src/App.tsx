@@ -4,7 +4,7 @@ import Container from './Container.tsx'
 function App() {
   return (
     <main>
-      <Container as={Button} />
+      <Container as={Button}>Click me</Container>
     </main>
   )
 }
