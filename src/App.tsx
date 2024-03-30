@@ -1,14 +1,10 @@
-import Input from './Input.tsx'
 import Button from './Button.tsx'
+import Container from './Container.tsx'
+
 function App() {
   return (
     <main>
-      <p>
-        <Button>A Button</Button>
-      </p>
-      <p>
-        <Button href=''>A Link</Button>
-      </p>
+      <Container as={Button} />
     </main>
   )
 }
