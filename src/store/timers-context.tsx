@@ -1,6 +1,6 @@
 import { type ReactNode, createContext, useContext, useReducer } from 'react'
 
-type Timer = {
+export type Timer = {
   name: string
   duration: number
 }
@@ -73,8 +73,8 @@ function timersReducer(state: TimersState, action: Action): TimersState {
       timers: [
         ...state.timers,
         {
-          name,
-          duration,
+          name: action.payload.name,
+          duration: action.payload.duration,
         },
       ],
     }
