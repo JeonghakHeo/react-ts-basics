@@ -4,11 +4,15 @@ import Input from './Input'
 import Button from './Button'
 
 function App() {
-  const input = useRef<HTMLInputElement>(null)
+  function handleSave(data: unknown) {
+    const extractedData = data as { name: string; age: string }
+
+    console.log(extractedData)
+  }
 
   return (
     <main>
-      <Form>
+      <Form onSave={handleSave}>
         <Input type='text' label='Name' id='name' />
         <Input type='number' label='Age' id='age' />
         <p>
