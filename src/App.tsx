@@ -2,6 +2,7 @@ import { type ReactNode, useEffect, useState } from 'react'
 import BlogPosts, { BlogPost } from './components/BlogPosts.tsx'
 import { get } from './utils/http.ts'
 import fetchingImg from './assets/data-fetching.png'
+import ErrorMessage from './components/ErrorMessage.tsx'
 
 type RawDataBlogPost = {
   id: number
@@ -12,22 +13,34 @@ type RawDataBlogPost = {
 
 function App() {
   const [fetchedPosts, setFetchedPosts] = useState<BlogPost[]>()
+  const [isFetching, setIsFetching] = useState(false)
+  const [error, setError] = useState<string>()
 
   useEffect(() => {
     async function fetchPosts() {
-      const data = (await get(
-        'https://jsonplaceholder.typicode.com/posts'
-      )) as RawDataBlogPost[]
+      try {
+        setIsFetching(true)
+        const data = (await get(
+          'https://jsonplaceholder.typicode.com/posts'
+        )) as RawDataBlogPost[]
 
-      const blogPosts: BlogPost[] = data.map((rawPost) => {
-        return {
-          id: rawPost.id,
-          title: rawPost.title,
-          text: rawPost.body,
+        const blogPosts: BlogPost[] = data.map((rawPost) => {
+          return {
+            id: rawPost.id,
+            title: rawPost.title,
+            text: rawPost.body,
+          }
+        })
+
+        setFetchedPosts(blogPosts)
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message)
         }
-      })
+        // setError((error as Erorr).message)
+      }
 
-      setFetchedPosts(blogPosts)
+      setIsFetching(false)
     }
 
     fetchPosts()
@@ -37,6 +50,14 @@ function App() {
 
   if (fetchedPosts) {
     content = <BlogPosts posts={fetchedPosts} />
+  }
+
+  if (isFetching) {
+    content = <p id='loading-fallback'>Fetching posts...</p>
+  }
+
+  if (error) {
+    content = <ErrorMessage text={error} />
   }
 
   return (
