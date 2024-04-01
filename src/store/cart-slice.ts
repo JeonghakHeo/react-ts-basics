@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 type CartItem = {
   id: string
   title: string
   price: number
-  quanntity: number
+  quantity: number
 }
 
 type CartState = {
@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart() {},
+    addToCart(state, action: PayloadAction<{ id: string, title: string, price: number, quantity: number}>) {},
     removeFromCart() {}
   }
 })
